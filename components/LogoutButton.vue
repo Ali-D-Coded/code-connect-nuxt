@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Cookie from "js-cookie";
 // import { useRouter } from "vue-router";
-// import { Icon } from "@iconify/vue";
+import { Icon } from "@iconify/vue";
 
 const router = useRouter();
 const handleLogout = () => {

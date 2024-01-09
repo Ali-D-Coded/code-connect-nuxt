@@ -2,15 +2,15 @@
 type navitems = {
 	url: string,
 	name: string,
-	element: ReactElement | any,
+	icon: any,
 	isMenu: boolean,
 	isPrivate: boolean
 }
 
 export const nav : navitems[] = [
-	{url: "/", 				name:"Home",    		element: "HomeView", 		},
-	{url: "/users", 		name:"Users", 			element: "UsersView", 		},
-	{url: "/certificates", 	name:"Certificates", 	element: "CertificatesView", },
-	{url: "/events", 		name:"Events", 			element: "EventsView", 		},
+	{url: "/", 				name:"Home",    		icon: "AppstoreOutlined ", 		},
+	{url: "/users", 		name:"Users", 			icon: "UsersView", 		},
+	{url: "/certificates", 	name:"Certificates", 	icon: "CertificatesView", },
+	{url: "/events", 		name:"Events", 			icon: "EventsView", 		},
 	
 ]

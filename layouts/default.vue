@@ -1,34 +1,29 @@
-<script setup lang="ts">
-// console.log(Cookie.get());
-
-const open = ref<boolean>(false);
-
-const showDrawer = () => {
-  open.value = true;
+<script lang="ts" setup>
+import { ref } from "vue";
+import {
+  UserOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons-vue";
+const onCollapse = (collapsed: boolean, type: string) => {
+  console.log(collapsed, type);
 };
 
-const onClose = () => {
-  open.value = false;
+const onBreakpoint = (broken: boolean) => {
+  console.log(broken);
 };
 
-const route = useRoute(); // Access the current route
-
-// Function to check if the current route is the authentication page
-const isAuthPage = () => {
-  return route.name === "auth"; // Adjust 'auth' to the actual name of your authentication route
-};
+const selectedKeys = ref<string[]>(["4"]);
 </script>
-
 <template>
-  <div class="grid-container">
-    <header class="flex justify-end p-3 header">
-      <div class="">
-        <!-- <logout-button /> -->
-        <!-- <logout-button /> -->
-      </div>
-    </header>
-
-    <aside class="aside bg-[#75bcff]">
+  <a-layout class="h-screen">
+    <a-layout-sider
+      breakpoint="lg"
+      collapsed-width="0"
+      @collapse="onCollapse"
+      @breakpoint="onBreakpoint"
+    >
       <div class="flex justify-center p-5">
         <img
           src="/code connnect logo.png"
@@ -36,82 +31,47 @@ const isAuthPage = () => {
           width="120"
         />
       </div>
-      <nav
-        class="relative justify-center text-lg md:flex md:flex-col md:items-center"
-      >
+      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
+        <a-menu-item v-for="(n, index) in nav" :key="index">
+          <NuxtLink class="w-ful" :to="n.url">
+            <!-- {{ n.icon }} -->
+            <AppstoreOutlined />
+            <span class="nav-text">{{ n.name }}</span>
+          </NuxtLink>
+        </a-menu-item>
+      </a-menu>
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header :style="{ background: '#fff', padding: 0 }" />
+      <a-layout-content :style="{ margin: '24px 16px 0' }" class="">
         <div
-          class="absolute right-0 hidden w-10 h-10 p-1 text-center rounded-full bg-emerald-600"
-          @click="showDrawer()"
+          :style="{ padding: '24px', background: '#fff', minHeight: '100%' }"
         >
-          x
+          <slot />
         </div>
-        <div
-          v-for="n in nav"
-          :key="n.name"
-          class="w-full py-5 text-center hover:border-b"
-        >
-          <NuxtLink class="w-ful" @click="onClose" :to="n.url">{{
-            n.name
-          }}</NuxtLink>
-        </div>
-      </nav>
-    </aside>
-    <main class="main">
-      <slot />
-    </main>
-
-    <footer class="footer">footer</footer>
-  </div>
+      </a-layout-content>
+      <a-layout-footer style="text-align: center">
+        Rootsys International ©2019 Created by Ali Afthab
+      </a-layout-footer>
+    </a-layout>
+  </a-layout>
 </template>
-
 <style scoped>
-.grid-container {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  grid-template-rows: 50px 1fr 50px;
-  grid-template-areas:
-    "aside header"
-    "aside main"
-    "aside footer";
-  height: 100vh;
+#components-layout-demo-responsive .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
 }
 
-.header {
-  grid-area: header;
-  box-shadow: 0 0.5px 10px rgb(155, 155, 155);
+.site-layout-sub-header-background {
+  background: #fff;
 }
-.aside {
-  grid-area: aside;
-}
-.main {
-  grid-area: main;
-  overflow: scroll;
-}
-.footer {
-  grid-area: footer;
-}
-/*
-@media (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: 0px 1fr;
-    position: relative;
-  }
 
-  .header {
-    flex-direction: column;
-    align-items: center;
-  }
+.site-layout-background {
+  background: #fff;
+}
 
-  .header img {
-    margin-bottom: 10px;
-  }
-
-  .aside {
-    overflow: hidden;
-    position: fixed;
-    z-index: 10;
-    height: 100%;
-    width: 80%;
-  }
-}*/
+[data-theme="dark"] .site-layout-sub-header-background {
+  background: #141414;
+}
 </style>

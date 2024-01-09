@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum ACCOUNT_STATUS {
+  APPROVAL_PENDING
+  ACTIVE
+  INACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum ACCOUNT_TYPE {
+  ADMIN
+  USER
+}
+
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  firstName    String?
+  lastName     String?
+  userName     String         @unique
+  phone        String         @unique
+  email        String         @unique
+  password     String
+  status       ACCOUNT_STATUS @default(APPROVAL_PENDING)
+  accountType  ACCOUNT_TYPE   @default(USER)
+  refreshToken String?
+
+  certificates Certificates[]
+}
+
+model Certificates {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name   String
+  url    String
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  url      String
+  name     String?
+  size     Int?
+  Events   Events? @relation(fields: [eventsId], references: [id])
+  eventsId String?
+}
+
+model Events {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String
+  description String?
+  date        DateTime
+  location    String
+  medias      Media[]
+}

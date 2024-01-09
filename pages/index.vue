@@ -1,14 +1,6 @@
-<script>
-export default {};
-const checked = useState("checked", () => !checked);
-</script>
+<script lang="ts" setup></script>
 <template>
-  <div class="text-center bg-red-300 w-52 mx-auto">
-    home pages ssfgfd
-
-    <a-switch v-model:checked="checked" />
-    fddsf
-  </div>
+  <div class="">dfdsf</div>
 </template>
 
 <style></style>
