@@ -13,9 +13,7 @@ datasource db {
 enum ACCOUNT_STATUS {
   APPROVAL_PENDING
   ACTIVE
-  INACTIVE
   BLOCKED
-  DELETED
 }
 
 enum ACCOUNT_TYPE {
@@ -39,6 +37,7 @@ model User {
   refreshToken String?
 
   certificates Certificates[]
+  deleted      Boolean        @default(false)
 }
 
 model Certificates {
