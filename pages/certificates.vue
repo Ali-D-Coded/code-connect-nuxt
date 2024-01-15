@@ -93,7 +93,7 @@ console.log({ editData });
       <template #title>
         <div class="flex justify-between">
           <div class="text-3xl font-bold">Certficates</div>
-          {{ editData.name }}
+
           <button
             class="w-10 h-10 pb-1 border rounded-full shadow-md"
             @click="openCreate = !openCreate"

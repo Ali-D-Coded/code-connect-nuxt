@@ -43,9 +43,16 @@ const selectedKeys = ref<string[]>(["4"]);
     </a-layout-sider>
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: 0 }" />
-      <a-layout-content :style="{ margin: '24px 16px 0' }" class="">
+      <a-layout-content
+        :style="{ margin: '24px 16px 0' }"
+        class="overflow-y-scroll"
+      >
         <div
-          :style="{ padding: '24px', background: '#fff', minHeight: '100%' }"
+          :style="{
+            padding: '24px',
+            background: '#fff',
+            minHeight: '100%',
+          }"
         >
           <slot />
         </div>
