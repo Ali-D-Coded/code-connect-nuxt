@@ -13,10 +13,10 @@ const storage = createStorage({
 });
 
 const isFile = (data: MultiPartData) => {
-	return Object.keys(data).filter((key) => FILE_KEYS.indexOf(key) !== -1).length === FILE_KEYS.lengh
+	return Object.keys(data).filter((key) => FILE_KEYS.indexOf(key) !== -1).length === FILE_KEYS.length
 }
 
-const parseMultitpart = (data: MultiPartData)=> {
+const parseMultitpart = (data?: MultiPartData[])=> {
 const arr = (Array.isArray(data) ? data : []) as MultiPartData[]
 
 const result = arr.reduce((prev:Record<string, any>, curr) => {
@@ -34,7 +34,7 @@ const saveFile = async (file: MultiPartData) => {
 	const fileName = randomUUID() + "." + ext;
 	console.log("35",{fileName});
 
-    await storage.setItemRaw(filename, file.data)
+    await storage.setItemRaw(fileName, file.data)
 }
 
 export default defineEventHandler(async (event) => {
@@ -48,15 +48,15 @@ export default defineEventHandler(async (event) => {
 		}
 		console.log(parseMultitpart(formData));
 
-		const file = formData.find(it => it.name = "file")
-		const path = "./public/" + file.filename
+		const file = formData?.find(it => it.name = "file")
+		const path = "./public/" + file?.filename
 		// console.log({file, path});
 		
 
 		return {
 			path
 		}	
-	} catch (error) {
+	} catch (error:any) {
 		console.log(error.message);
 		return error
 	}
