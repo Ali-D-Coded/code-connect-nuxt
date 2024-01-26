@@ -3,13 +3,14 @@ import {type MultiPartData} from "h3"
 import { createStorage } from "unstorage";
 import fsDriver from "unstorage/drivers/fs";
 import {randomUUID} from "crypto"
+import { PrismaClient } from "@prisma/client";
 
 
 const FILE_KEYS = ["name","filename","type","data"]
 
 
 const storage = createStorage({
-  driver: fsDriver({ base: "./tmp" }),
+  driver: fsDriver({ base: "./uploads/certificates" }),
 });
 
 const isFile = (data: MultiPartData) => {
@@ -32,29 +33,36 @@ const saveFile = async (file: MultiPartData) => {
 	
 	const [_mime, ext]= String(file.type).split('/');
 	const fileName = randomUUID() + "." + ext;
-	console.log("35",{fileName});
+	// console.log("35",{fileName});
 
-    await storage.setItemRaw(fileName, file.data)
+	await storage.setItemRaw(fileName, file.data)
+	return fileName
 }
 
+const prisma = new PrismaClient()
 export default defineEventHandler(async (event) => {
 	try {
 		const formData = await readMultipartFormData(event);
 		const parsed = parseMultitpart(formData)
     //    console.log({parsed,formData });
-
+		let fileName
 		if(parsed.file){
-		await saveFile(parsed.file)	
+		 fileName = await saveFile(parsed.file)	
 		}
-		console.log(parseMultitpart(formData));
+		// console.log(parseMultitpart(formData));
 
-		const file = formData?.find(it => it.name = "file")
-		const path = "./public/" + file?.filename
+
+		const path = "certificates/" + fileName
 		// console.log({file, path});
-		
-
+		const certificate = await prisma.certificates.create({
+			data: {
+				name: parsed.name,
+				url: path,
+				userId: parsed.user
+			}
+		})
 		return {
-			path
+			certificate
 		}	
 	} catch (error:any) {
 		console.log(error.message);

@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { PlusOutlined, EyeOutlined } from "@ant-design/icons-vue";
 
+
+definePageMeta({
+  middleware:"auth"
+})
 const columns = [
   {
     title: "First Name",

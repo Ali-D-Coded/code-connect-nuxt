@@ -13,7 +13,7 @@ async function seed() {
     status: ACCOUNT_STATUS.ACTIVE,
     accountType: ACCOUNT_TYPE.ADMIN,
   };
-  await prisma.User.create({
+  await prisma.user.create({
     data: data,
   });
 }

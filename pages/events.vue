@@ -6,7 +6,9 @@ import {
   PlusOutlined,
   DeleteOutlined,
 } from "@ant-design/icons-vue";
-
+definePageMeta({
+  middleware:"auth"
+})
 const data = [
   {
     id: 1,

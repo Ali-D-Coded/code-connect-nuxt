@@ -6,6 +6,11 @@ import {
   UploadOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons-vue";
+
+
+definePageMeta({
+  middleware: "auth",
+});
 const onCollapse = (collapsed: boolean, type: string) => {
   console.log(collapsed, type);
 };

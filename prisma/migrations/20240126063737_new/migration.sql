@@ -9,9 +9,10 @@ CREATE TABLE `User` (
     `phone` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `status` ENUM('APPROVAL_PENDING', 'ACTIVE', 'INACTIVE', 'BLOCKED', 'DELETED') NOT NULL DEFAULT 'APPROVAL_PENDING',
+    `status` ENUM('APPROVAL_PENDING', 'ACTIVE', 'BLOCKED') NOT NULL DEFAULT 'APPROVAL_PENDING',
     `accountType` ENUM('ADMIN', 'USER') NOT NULL DEFAULT 'USER',
     `refreshToken` VARCHAR(191) NULL,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
 
     UNIQUE INDEX `User_userName_key`(`userName`),
     UNIQUE INDEX `User_phone_key`(`phone`),

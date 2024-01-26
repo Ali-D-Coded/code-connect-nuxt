@@ -13,6 +13,8 @@ export default defineEventHandler(async (event) => {
         status: ACCOUNT_STATUS.ACTIVE,
         accountType: ACCOUNT_TYPE.ADMIN,
       };
-      return await prisma.User.create(data);
+  return await prisma.user.create({
+        data: data
+      });
  
 })

@@ -6,6 +6,10 @@ import {
   PlusOutlined,
   UploadOutlined,
 } from "@ant-design/icons-vue";
+definePageMeta({
+  middleware:"auth"
+})
+
 const columns = [
   {
     title: "Name",
